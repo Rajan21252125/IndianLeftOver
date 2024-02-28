@@ -19,7 +19,7 @@ This project implements a Recipe Recommendation System that suggests recipes bas
 1. Clone the repository: `git clone https://github.com/your/repository.git`
 2. Install dependencies:
    - For frontend: `cd frontend && npm install`
-   - For backend: `cd backend && pip install -r requirements.txt`
+   - For backend: `cd backend && pip install -r req.txt`
 3. Start the frontend server: `cd frontend && npm start`
 4. Start the backend server: `cd backend && python app.py`
 
