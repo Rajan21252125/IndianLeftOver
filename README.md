@@ -30,7 +30,7 @@ This project implements a Recipe Recommendation System that suggests recipes bas
 4. Customize the theme, color scheme, and font from the settings menu.
 
 ## Credits
-This project was developed by [Your Name] and [Contributor Name] as part of [Project Name].
+This project was developed by Rajan Gupta and Aniket Mishra as part of LeftOver Recipe Recommendation.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
