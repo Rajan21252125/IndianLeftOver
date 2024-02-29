@@ -74,7 +74,7 @@ def get_recipe_recommendations(leftover_ingredients):
     return recommendations
 
 
-joblib.dump(cosine_sim, 'model1.joblib')
+# joblib.dump(cosine_sim, 'model1.joblib')
 
 
 
