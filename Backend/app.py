@@ -9,7 +9,7 @@ app = Flask(__name__, template_folder='templates')
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # Load the model
-model = joblib.load('model1.joblib')
+# model = joblib.load('model1.joblib')
 
 from flask import jsonify
 
