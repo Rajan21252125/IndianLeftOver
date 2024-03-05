@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BACKEND_URL } from '../constant/constant';
 
 function RecipeRecommendation() {
   const [leftoverIngredients, setLeftoverIngredients] = useState('');
@@ -15,7 +16,7 @@ function RecipeRecommendation() {
     setIsLoading(true); // Set loading state to true
 
     try {
-      const response = await axios.post('http://localhost:5000/api/recommend', {
+      const response = await axios.post(`${BACKEND_URL}api/recommend`, {
         ingredients: leftoverIngredients,
       });
 

@@ -13,6 +13,12 @@ model = joblib.load('model1.joblib')
 
 from flask import jsonify
 
+
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
 @app.route('/api/recommend', methods=['POST'])
 def api_recommend():
     # Get the user input from the request body

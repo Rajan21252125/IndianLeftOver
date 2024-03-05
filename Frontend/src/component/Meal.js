@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Mealitem from "./MealItem";
 import axios from "axios";
+import { BACKEND_URL } from "../constant/constant";
 
 const Meal = () => {
     const [search, setSearch] = useState("");
@@ -13,7 +14,7 @@ const Meal = () => {
         setIsLoading(true); // Set loading state to true
     
         try {
-          const response = await axios.post('http://localhost:5000/api/recipe', {
+          const response = await axios.post(`${BACKEND_URL}api/recipe`, {
             recipe_name: search,
           });
     

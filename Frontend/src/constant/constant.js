@@ -1,0 +1,1 @@
+export const BACKEND_URL = "https://indian-left-over.vercel.app/"
