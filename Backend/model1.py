@@ -49,7 +49,7 @@ def searchRecipe(query):
     cosine_sim = cosine_similarity(query_vector, tfidf_matrix).flatten()
 
     # Get top 10 similar recipes
-    top_indices = cosine_sim.argsort()[-10:][::-1]
+    top_indices = cosine_sim.argsort()
     recipe_recommendations = data.iloc[top_indices][['TranslatedRecipeName', 'TranslatedInstructions', 'URL', 'image-url', 'Cuisine']].values.tolist()
 
     return recipe_recommendations
