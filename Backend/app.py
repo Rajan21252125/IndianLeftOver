@@ -1,18 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
-
-from model1 import get_recipe_recommendations
-from model1 import searchRecipe
+from model1 import get_recipe_recommendations, searchRecipe
 
 app = Flask(__name__, template_folder='templates')
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
-# Load the model
-# model = joblib.load('model1.joblib')
-
-from flask import jsonify
-
-
+# Restrict CORS to only API endpoints
+CORS(app, resources={r"/api/*": {"origins": "https://indian-left-over.vercel.app"}})
 
 @app.route('/')
 def home():
@@ -20,31 +13,25 @@ def home():
 
 @app.route('/api/recommend', methods=['POST'])
 def api_recommend():
-    # Get the user input from the request body
-    data = request.get_json()
+    data = request.get_json(silent=True)
+    if not data or 'ingredients' not in data:
+        return jsonify({"error": "Invalid input"}), 400
+
     ingredients = data['ingredients']
-
-    # Get recipe recommendations based on the user input
     recommendations = get_recipe_recommendations(ingredients)
-
-    # Return the recommendations as a JSON response
+    
     return jsonify(recommendations)
 
-
-# for recipe suggestion
 @app.route('/api/recipe', methods=['POST'])
 def recipe_recommend():
-    # Get the user input from the request body
-    recipe_name = request.get_data()
-    # ingredients = recipe_name['ingredients']
-    
+    data = request.get_json(silent=True)
+    if not data or 'recipe_name' not in data:
+        return jsonify({"error": "Invalid input"}), 400
 
-    # Get recipe recommendations based on the user input
+    recipe_name = data['recipe_name']
     recipe_recommendation = searchRecipe(recipe_name)
-
-    # Return the recommendations as a JSON response
-    # print(recipe_recommendation)
+    
     return jsonify(recipe_recommendation)
 
-
-
+if __name__ == '__main__':
+    app.run(debug=True, threaded=True)  # Enables multi-threading

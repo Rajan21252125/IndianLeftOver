@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from '../constant/constant';
+import Loading from '../component/Loading';
 
 function RecipeRecommendation() {
   const [leftoverIngredients, setLeftoverIngredients] = useState('');
@@ -47,12 +48,13 @@ function RecipeRecommendation() {
             className='form-input'
           />
         </label>
-        <button className='form-button' type="submit">
-          {isLoading ? 'Loading...' : 'Get Recommendations'}
+        <button className='form-button' type="submit" disabled={leftoverIngredients === '' || isLoading}>
+          Get Recommendations
         </button>
       </form>
         <div>
-          <ul className='recommendations-list'>
+          { isLoading ? <Loading /> :
+            <ul className='recommendations-list'>
             {recommendations.map((rec, index) => (
               <li className='recommendation-item' key={index}>
                 <img className='recommendation-img' src={rec[4]} alt={rec[1]} />
@@ -62,7 +64,7 @@ function RecipeRecommendation() {
                 <p className='recommendation-rank'>{`${Math.round(rec[2]*100)}%`}</p>
               </li>
             ))}
-          </ul>
+          </ul>}
         </div>
     </div>
   );

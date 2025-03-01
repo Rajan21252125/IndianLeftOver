@@ -126,6 +126,9 @@ img {
 
 @import "partials/__recommend";
 
+
+@import "partials/_loading";
+
 .options-conatiner {
     box-shadow: 0 5px 10px var(--shadow-color);
     padding: 1em;
@@ -262,5 +265,15 @@ img {
 @media screen and (max-width: 480px) {
     .container {
         padding-inline: 3vw;
+    }
+}
+
+
+button {
+    &:disabled {
+        cursor: not-allowed;
+        background-color: var(--text-light);
+        color: #fff;
+        opacity: 0.6;
     }
 }

@@ -1,6 +1,5 @@
 import React from "react";
 const Mealitem = (getMeal) => {
-    console.log(getMeal.data)
     return (
         <>
             <div className="card">

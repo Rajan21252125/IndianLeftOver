@@ -141,6 +141,44 @@
         }
     }
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.pagination button {
+    background: var(--primary-color);
+    color: var(--text-light);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 2px solid var(--shadow-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.pagination button:hover {
+    background: var(--shadow-color);
+    color: var(--background-light);
+}
+
+.pagination button:disabled {
+    background: var(--background-light);
+    color: var(--text-light);
+    cursor: not-allowed;
+    border: 2px solid var(--text-light);
+}
+
+.pagination span {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
 
 @media only screen and (max-width: 1024px) {
     .container1 {
