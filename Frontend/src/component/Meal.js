@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Mealitem from "./MealItem";
 import axios from "axios";
 import { BACKEND_URL } from "../constant/constant";
@@ -10,6 +10,24 @@ const Meal = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10; // Display 10 items per page
+
+    // Load from sessionStorage on mount
+    useEffect(() => {
+        const storedMeals = sessionStorage.getItem("mealData");
+        const storedPage = sessionStorage.getItem("mealPage");
+        const storedSearchMealValue = sessionStorage.getItem("searchMealValue");
+
+        if (storedSearchMealValue) {
+            setSearch(JSON.parse(storedSearchMealValue));
+        }
+
+        if (storedMeals) {
+            setMeal(JSON.parse(storedMeals));
+        }
+        if (storedPage) {
+            setCurrentPage(parseInt(storedPage));
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,6 +41,11 @@ const Meal = () => {
 
             if (response.status === 200) {
                 setMeal(response.data);
+
+                // Save data to sessionStorage
+                sessionStorage.setItem("mealData", JSON.stringify(response.data));
+                sessionStorage.setItem("searchMealValue", JSON.stringify(search));
+                sessionStorage.setItem("mealPage", "1");
             } else {
                 console.error("Request failed:", response.statusText);
             }
@@ -41,13 +64,21 @@ const Meal = () => {
     // Handle Page Change
     const nextPage = () => {
         if (currentPage < Math.ceil(Mymeal.length / itemsPerPage)) {
-            setCurrentPage((prevPage) => prevPage + 1);
+            setCurrentPage((prevPage) => {
+                const newPage = prevPage + 1;
+                sessionStorage.setItem("mealPage", newPage);
+                return newPage;
+            });
         }
     };
 
     const prevPage = () => {
         if (currentPage > 1) {
-            setCurrentPage((prevPage) => prevPage - 1);
+            setCurrentPage((prevPage) => {
+                const newPage = prevPage - 1;
+                sessionStorage.setItem("mealPage", newPage);
+                return newPage;
+            });
         }
     };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from '../constant/constant';
 import Loading from '../component/Loading';
@@ -6,7 +6,20 @@ import Loading from '../component/Loading';
 function RecipeRecommendation() {
   const [leftoverIngredients, setLeftoverIngredients] = useState('');
   const [recommendations, setRecommendations] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Load stored search input and recommendations on mount
+  useEffect(() => {
+    const storedIngredients = sessionStorage.getItem("leftoverIngredients");
+    const storedRecommendations = sessionStorage.getItem("recommendations");
+
+    if (storedIngredients) {
+      setLeftoverIngredients(storedIngredients);
+    }
+    if (storedRecommendations) {
+      setRecommendations(JSON.parse(storedRecommendations));
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     setLeftoverIngredients(e.target.value);
@@ -14,7 +27,7 @@ function RecipeRecommendation() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Set loading state to true
+    setIsLoading(true);
 
     try {
       const response = await axios.post(`${BACKEND_URL}/api/recommend`, {
@@ -24,6 +37,10 @@ function RecipeRecommendation() {
       if (response.status === 200) {
         const data = response.data;
         setRecommendations(data);
+
+        // Store search and recommendations in sessionStorage
+        sessionStorage.setItem("leftoverIngredients", leftoverIngredients);
+        sessionStorage.setItem("recommendations", JSON.stringify(data));
       } else {
         console.error('Request failed:', response.statusText);
       }
@@ -31,7 +48,7 @@ function RecipeRecommendation() {
       alert('An error occurred. Please try again later.');
       console.error('Error:', error);
     } finally {
-      setIsLoading(false); // Set loading state to false after the request is complete
+      setIsLoading(false);
     }
   };
 
@@ -52,20 +69,21 @@ function RecipeRecommendation() {
           Get Recommendations
         </button>
       </form>
-        <div>
-          { isLoading ? <Loading /> :
-            <ul className='recommendations-list'>
+
+      <div>
+        {isLoading ? <Loading /> :
+          <ul className='recommendations-list'>
             {recommendations.map((rec, index) => (
               <li className='recommendation-item' key={index}>
-                <img className='recommendation-img' src={rec[4]} alt={rec[1]} />
-                <a href={rec[3]} target="_blank" rel="noopener noreferrer">
-                  {rec[1]}
+                <img className='recommendation-img' src={rec[2]} alt={rec[0]} />
+                <a href={rec[2]} target="_blank" rel="noopener noreferrer">
+                  {rec[0]}
                 </a>
-                <p className='recommendation-rank'>{`${Math.round(rec[2]*100)}%`}</p>
+                <p className='recommendation-rank'>{`${rec[3]}%`}</p>
               </li>
             ))}
           </ul>}
-        </div>
+      </div>
     </div>
   );
 }

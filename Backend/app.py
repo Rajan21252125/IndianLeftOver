@@ -5,7 +5,7 @@ from model1 import get_recipe_recommendations, searchRecipe
 app = Flask(__name__, template_folder='templates')
 
 # Restrict CORS to only API endpoints
-CORS(app, resources={r"/api/*": {"origins": "https://indian-left-over.vercel.app"}})
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
 @app.route('/')
 def home():
