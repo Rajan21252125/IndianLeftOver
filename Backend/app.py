@@ -1,15 +1,12 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from model1 import get_recipe_recommendations, searchRecipe
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__)
 
 # Restrict CORS to only API endpoints
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
-@app.route('/')
-def home():
-    return render_template('index.html')
 
 @app.route('/api/recommend', methods=['POST'])
 def api_recommend():
