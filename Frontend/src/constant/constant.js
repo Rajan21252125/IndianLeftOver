@@ -1,1 +1,1 @@
-export const BACKEND_URL = "https://indian-left-over.vercel.app/"
+export const BACKEND_URL = "http://localhost:5000"

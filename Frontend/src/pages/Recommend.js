@@ -16,7 +16,7 @@ function RecipeRecommendation() {
     setIsLoading(true); // Set loading state to true
 
     try {
-      const response = await axios.post(`${BACKEND_URL}api/recommend`, {
+      const response = await axios.post(`${BACKEND_URL}/api/recommend`, {
         ingredients: leftoverIngredients,
       });
 
@@ -27,6 +27,7 @@ function RecipeRecommendation() {
         console.error('Request failed:', response.statusText);
       }
     } catch (error) {
+      alert('An error occurred. Please try again later.');
       console.error('Error:', error);
     } finally {
       setIsLoading(false); // Set loading state to false after the request is complete

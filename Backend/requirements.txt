@@ -2,5 +2,4 @@ pandas
 numpy
 scikit-learn
 flask
-joblib
 flask_cors

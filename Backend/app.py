@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS
 
-import joblib
 from model1 import get_recipe_recommendations
 from model1 import searchRecipe
 
